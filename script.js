@@ -1,5 +1,5 @@
 /**
- * HostelHub - Modern Hostel Management System
+ * HostelNest Nepal - Student Housing Platform
  * JavaScript for Interactive Functionality
  */
 
@@ -9,7 +9,12 @@ document.addEventListener('DOMContentLoaded', function() {
     initSmoothScroll();
     initHeaderScroll();
     initCountUpAnimation();
-    initFeatureCards();
+    initSearchTabs();
+    initFilterTags();
+    initFavoriteButtons();
+    initBudgetCalculator();
+    initViewToggle();
+    initSearchForm();
     initScrollReveal();
 });
 
@@ -22,17 +27,11 @@ function initMobileMenu() {
     
     if (mobileMenuBtn && navLinks) {
         mobileMenuBtn.addEventListener('click', function() {
-            // Toggle button animation
             this.classList.toggle('active');
-            
-            // Toggle navigation menu
             navLinks.classList.toggle('active');
-            
-            // Prevent body scroll when menu is open
             document.body.classList.toggle('menu-open');
         });
         
-        // Close menu when clicking on a link
         const navLinkItems = navLinks.querySelectorAll('.nav-link');
         navLinkItems.forEach(link => {
             link.addEventListener('click', function() {
@@ -42,7 +41,6 @@ function initMobileMenu() {
             });
         });
         
-        // Close menu when clicking outside
         document.addEventListener('click', function(e) {
             if (!mobileMenuBtn.contains(e.target) && !navLinks.contains(e.target)) {
                 mobileMenuBtn.classList.remove('active');
@@ -105,13 +103,12 @@ function initHeaderScroll() {
 function initCountUpAnimation() {
     const countElements = document.querySelectorAll('.stat-number[data-count]');
     
-    // Check if Intersection Observer is supported
     if ('IntersectionObserver' in window) {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const element = entry.target;
-                    const targetCount = parseInt(element.getAttribute('data-count'));
+                    const targetCount = parseFloat(element.getAttribute('data-count'));
                     animateCount(element, targetCount);
                     observer.unobserve(element);
                 }
@@ -124,9 +121,8 @@ function initCountUpAnimation() {
             observer.observe(element);
         });
     } else {
-        // Fallback for older browsers
         countElements.forEach(element => {
-            const targetCount = parseInt(element.getAttribute('data-count'));
+            const targetCount = parseFloat(element.getAttribute('data-count'));
             animateCount(element, targetCount);
         });
     }
@@ -139,16 +135,19 @@ function animateCount(element, target) {
     const duration = 2000;
     const startTime = performance.now();
     const startValue = 0;
+    const isDecimal = target % 1 !== 0;
     
     function updateCount(currentTime) {
         const elapsed = currentTime - startTime;
         const progress = Math.min(elapsed / duration, 1);
-        
-        // Easing function for smooth animation
         const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-        const currentValue = Math.floor(startValue + (target - startValue) * easeOutQuart);
+        const currentValue = startValue + (target - startValue) * easeOutQuart;
         
-        element.textContent = currentValue.toLocaleString();
+        if (isDecimal) {
+            element.textContent = currentValue.toFixed(1);
+        } else {
+            element.textContent = Math.floor(currentValue).toLocaleString();
+        }
         
         if (progress < 1) {
             requestAnimationFrame(updateCount);
@@ -159,40 +158,210 @@ function animateCount(element, target) {
 }
 
 /**
- * Feature Cards Hover Effect
+ * Search Tabs Functionality
  */
-function initFeatureCards() {
-    const featureCards = document.querySelectorAll('.feature-card');
+function initSearchTabs() {
+    const searchTabs = document.querySelectorAll('.search-tab');
     
-    featureCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-10px)';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0)';
+    searchTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            searchTabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
         });
     });
+}
+
+/**
+ * Filter Tags Functionality
+ */
+function initFilterTags() {
+    const filterTags = document.querySelectorAll('.filter-tag');
+    
+    filterTags.forEach(tag => {
+        tag.addEventListener('click', function() {
+            this.classList.toggle('active');
+            
+            // Visual feedback
+            if (this.classList.contains('active')) {
+                this.style.background = 'var(--primary-color)';
+                this.style.color = 'var(--white)';
+                this.style.borderColor = 'var(--primary-color)';
+            } else {
+                this.style.background = '';
+                this.style.color = '';
+                this.style.borderColor = '';
+            }
+        });
+    });
+}
+
+/**
+ * Favorite Buttons Functionality
+ */
+function initFavoriteButtons() {
+    const favoriteBtns = document.querySelectorAll('.favorite-btn');
+    
+    favoriteBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            this.classList.toggle('active');
+            
+            const icon = this.querySelector('i');
+            if (this.classList.contains('active')) {
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+                icon.style.color = 'var(--accent-pink)';
+                
+                // Add animation
+                this.style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 200);
+            } else {
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+                icon.style.color = '';
+            }
+        });
+    });
+}
+
+/**
+ * Budget Calculator Functionality (NPR)
+ */
+function initBudgetCalculator() {
+    const inputs = document.querySelectorAll('.calc-input input');
+    
+    inputs.forEach(input => {
+        input.addEventListener('input', calculateBudget);
+    });
+    
+    // Initial calculation
+    calculateBudget();
+}
+
+function calculateBudget() {
+    const rent = parseFloat(document.getElementById('rentInput')?.value) || 0;
+    const food = parseFloat(document.getElementById('foodInput')?.value) || 0;
+    const transport = parseFloat(document.getElementById('transportInput')?.value) || 0;
+    const utilities = parseFloat(document.getElementById('utilitiesInput')?.value) || 0;
+    const personal = parseFloat(document.getElementById('personalInput')?.value) || 0;
+    
+    const total = rent + food + transport + utilities + personal;
+    const discount = total * 0.1;
+    const final = total - discount;
+    
+    const totalEl = document.getElementById('totalBudget');
+    const finalEl = document.getElementById('finalBudget');
+    
+    if (totalEl) totalEl.textContent = `Rs. ${total.toLocaleString()}`;
+    if (finalEl) finalEl.textContent = `Rs. ${final.toLocaleString()}`;
+    
+    // Update chart ring
+    const chartRing = document.querySelector('.chart-ring');
+    if (chartRing && total > 0) {
+        const percentages = [
+            (rent / total) * 100,
+            (food / total) * 100,
+            (transport / total) * 100,
+            (utilities / total) * 100,
+            (personal / total) * 100
+        ];
+        
+        let cumulative = 0;
+        const colors = ['#4F46E5', '#10B981', '#F59E0B', '#EC4899', '#8B5CF6'];
+        
+        chartRing.style.background = `conic-gradient(
+            ${colors[0]} 0deg ${percentages[0] * 3.6}deg,
+            ${colors[1]} ${percentages[0] * 3.6}deg ${(percentages[0] + percentages[1]) * 3.6}deg,
+            ${colors[2]} ${(percentages[0] + percentages[1]) * 3.6}deg ${(percentages[0] + percentages[1] + percentages[2]) * 3.6}deg,
+            ${colors[3]} ${(percentages[0] + percentages[1] + percentages[2]) * 3.6}deg ${(percentages[0] + percentages[1] + percentages[2] + percentages[3]) * 3.6}deg,
+            ${colors[4]} ${(percentages[0] + percentages[1] + percentages[2] + percentages[3]) * 3.6}deg 360deg
+        )`;
+    }
+}
+
+/**
+ * View Toggle Functionality
+ */
+function initViewToggle() {
+    const viewBtns = document.querySelectorAll('.view-btn');
+    const listingsGrid = document.querySelector('.listings-grid');
+    
+    viewBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            viewBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            const view = this.getAttribute('data-view');
+            
+            if (view === 'list') {
+                listingsGrid.classList.add('list-view');
+            } else {
+                listingsGrid.classList.remove('list-view');
+            }
+        });
+    });
+}
+
+/**
+ * Search Form Functionality
+ */
+function initSearchForm() {
+    const searchBtn = document.querySelector('.btn-search');
+    const locationInput = document.getElementById('locationInput');
+    const priceRange = document.getElementById('priceRange');
+    const roomType = document.getElementById('roomType');
+    const moveInDate = document.getElementById('moveInDate');
+    
+    if (searchBtn) {
+        searchBtn.addEventListener('click', function() {
+            const searchData = {
+                location: locationInput?.value || '',
+                priceRange: priceRange?.value || '',
+                roomType: roomType?.value || '',
+                moveInDate: moveInDate?.value || ''
+            };
+            
+            // Get active filter tags
+            const activeFilters = [];
+            document.querySelectorAll('.filter-tag.active').forEach(tag => {
+                activeFilters.push(tag.getAttribute('data-filter'));
+            });
+            
+            // Simulate search (in real app, this would make API call)
+            console.log('Searching with:', searchData, 'Filters:', activeFilters);
+            
+            // Show feedback
+            const originalText = this.innerHTML;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
+            
+            setTimeout(() => {
+                this.innerHTML = originalText;
+                
+                // Scroll to listings
+                const listingsSection = document.getElementById('search');
+                if (listingsSection) {
+                    listingsSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 1500);
+        });
+    }
 }
 
 /**
  * Scroll Reveal Animation
  */
 function initScrollReveal() {
-    const revealElements = document.querySelectorAll('[data-aos]');
+    const revealElements = document.querySelectorAll('.hostel-card, .feature-card, .testimonial-card, .deal-card, .neighborhood-card');
     
     if ('IntersectionObserver' in window) {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const element = entry.target;
-                    const delay = element.getAttribute('data-aos-delay') || 0;
-                    
-                    setTimeout(() => {
-                        element.style.opacity = '1';
-                        element.style.transform = 'translateY(0)';
-                    }, delay);
-                    
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
                     observer.unobserve(element);
                 }
             });
@@ -202,7 +371,6 @@ function initScrollReveal() {
         });
         
         revealElements.forEach(element => {
-            // Set initial styles
             element.style.opacity = '0';
             element.style.transform = 'translateY(30px)';
             element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
@@ -212,173 +380,51 @@ function initScrollReveal() {
 }
 
 /**
- * Nav Link Active State on Scroll
+ * Sort Options Functionality
  */
-function initActiveNavLink() {
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-link');
+function initSortOptions() {
+    const sortSelect = document.getElementById('sortBy');
+    const listingsGrid = document.querySelector('.listings-grid');
+    const hostelCards = Array.from(listingsGrid.querySelectorAll('.hostel-card'));
     
-    window.addEventListener('scroll', function() {
-        let current = '';
-        
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
+    if (sortSelect) {
+        sortSelect.addEventListener('change', function() {
+            const sortBy = this.value;
             
-            if (window.pageYOffset >= sectionTop - 200) {
-                current = section.getAttribute('id');
-            }
-        });
-        
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === `#${current}`) {
-                link.classList.add('active');
-            }
-        });
-    });
-}
-
-/**
- * Parallax Effect for Hero Background
- */
-function initParallax() {
-    const hero = document.querySelector('.hero');
-    
-    if (hero) {
-        window.addEventListener('scroll', function() {
-            const scrolled = window.pageYOffset;
-            const heroBackground = hero.querySelector('.hero-background');
-            
-            if (heroBackground) {
-                heroBackground.style.transform = `translateY(${scrolled * 0.3}px)`;
-            }
-        });
-    }
-}
-
-/**
- * Button Ripple Effect
- */
-function initButtonRipple() {
-    const buttons = document.querySelectorAll('.btn');
-    
-    buttons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            const rect = this.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
-            const ripple = document.createElement('span');
-            ripple.style.cssText = `
-                position: absolute;
-                width: 20px;
-                height: 20px;
-                background: rgba(255, 255, 255, 0.5);
-                border-radius: 50%;
-                transform: translate(-50%, -50%);
-                left: ${x}px;
-                top: ${y}px;
-                pointer-events: none;
-            `;
-            
-            this.style.position = 'relative';
-            this.style.overflow = 'hidden';
-            this.appendChild(ripple);
-            
-            setTimeout(() => {
-                ripple.remove();
-            }, 600);
-        });
-    });
-}
-
-/**
- * Testimonial Card Auto-Rotation (Optional)
- */
-function initTestimonialCarousel() {
-    const testimonialsGrid = document.querySelector('.testimonials-grid');
-    
-    if (testimonialsGrid && window.innerWidth <= 768) {
-        let currentIndex = 0;
-        const cards = testimonialsGrid.querySelectorAll('.testimonial-card');
-        
-        // Show only first card on mobile
-        cards.forEach((card, index) => {
-            if (index !== 0) {
-                card.style.display = 'none';
-            }
-        });
-        
-        // Auto-rotate testimonials
-        setInterval(() => {
-            cards[currentIndex].style.display = 'none';
-            currentIndex = (currentIndex + 1) % cards.length;
-            cards[currentIndex].style.display = 'block';
-        }, 5000);
-    }
-}
-
-/**
- * Form Validation (for future contact form)
- */
-function initFormValidation() {
-    const forms = document.querySelectorAll('form');
-    
-    forms.forEach(form => {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Basic validation
-            const inputs = form.querySelectorAll('input[required], textarea[required]');
-            let isValid = true;
-            
-            inputs.forEach(input => {
-                if (!input.value.trim()) {
-                    isValid = false;
-                    input.classList.add('error');
-                } else {
-                    input.classList.remove('error');
+            hostelCards.sort((a, b) => {
+                switch (sortBy) {
+                    case 'price-low':
+                        return getPrice(a) - getPrice(b);
+                    case 'price-high':
+                        return getPrice(b) - getPrice(a);
+                    case 'rating':
+                        return getRating(b) - getRating(a);
+                    default:
+                        return 0;
                 }
             });
             
-            if (isValid) {
-                // Show success message (placeholder)
-                console.log('Form submitted successfully!');
-            }
-        });
-    });
-}
-
-/**
- * Lazy Loading for Images
- */
-function initLazyLoad() {
-    const images = document.querySelectorAll('img[data-src]');
-    
-    if ('IntersectionObserver' in window) {
-        const imageObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src;
-                    img.removeAttribute('data-src');
-                    imageObserver.unobserve(img);
-                }
+            hostelCards.forEach(card => {
+                listingsGrid.appendChild(card);
             });
         });
-        
-        images.forEach(img => {
-            imageObserver.observe(img);
-        });
     }
+}
+
+function getPrice(card) {
+    const priceEl = card.querySelector('.current-price');
+    return priceEl ? parseInt(priceEl.textContent.replace(/[^0-9]/g, '')) : 0;
+}
+
+function getRating(card) {
+    const ratingEl = card.querySelector('.hostel-rating span');
+    return ratingEl ? parseFloat(ratingEl.textContent) : 0;
 }
 
 /**
  * Keyboard Accessibility
  */
 function initKeyboardNavigation() {
-    // Enable keyboard navigation for mobile menu
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     
     if (mobileMenuBtn) {
@@ -392,7 +438,6 @@ function initKeyboardNavigation() {
         });
     }
     
-    // Enable keyboard navigation for nav links
     const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(link => {
         link.setAttribute('tabindex', '0');
@@ -400,7 +445,7 @@ function initKeyboardNavigation() {
 }
 
 /**
- * Performance: Debounce Scroll Events
+ * Debounce Function for Performance
  */
 function debounce(func, wait = 10, immediate = true) {
     let timeout;
@@ -418,28 +463,16 @@ function debounce(func, wait = 10, immediate = true) {
     };
 }
 
-/**
- * Throttle Function for Performance
- */
-function throttle(func, limit) {
-    let inThrottle;
-    return function() {
-        const args = arguments;
-        const context = this;
-        if (!inThrottle) {
-            func.apply(context, args);
-            inThrottle = true;
-            setTimeout(() => inThrottle = false, limit);
-        }
-    };
-}
-
-// Export functions for potential module use
-window.HostelHub = {
+// Export functions
+window.HostelNest = {
     initMobileMenu,
     initSmoothScroll,
     initHeaderScroll,
     initCountUpAnimation,
-    initFeatureCards,
-    initScrollReveal
+    initSearchTabs,
+    initFilterTags,
+    initFavoriteButtons,
+    initBudgetCalculator,
+    initViewToggle,
+    initSearchForm
 };

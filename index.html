@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HostelHub - Modern Hostel Management System</title>
+    <title>HostelNest Nepal - Find Your Perfect Student Housing</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
@@ -16,8 +16,8 @@
         <nav class="navbar">
             <div class="container">
                 <a href="#" class="logo">
-                    <i class="fas fa-building"></i>
-                    <span>HostelHub</span>
+                    <i class="fas fa-bed"></i>
+                    <span>HostelNest Nepal</span>
                 </a>
                 <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
                     <span></span>
@@ -26,226 +26,659 @@
                 </button>
                 <ul class="nav-links" id="navLinks">
                     <li><a href="#home" class="nav-link">Home</a></li>
-                    <li><a href="#features" class="nav-link">Features</a></li>
-                    <li><a href="#stats" class="nav-link">Statistics</a></li>
-                    <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
-                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                    <li><a href="#search" class="nav-link">Browse Hostels</a></li>
+                    <li><a href="#neighborhoods" class="nav-link">Areas</a></li>
+                    <li><a href="#reviews" class="nav-link">Reviews</a></li>
+                    <li><a href="#deals" class="nav-link">Deals</a></li>
                 </ul>
                 <div class="nav-buttons">
                     <a href="#login" class="btn btn-outline">Login</a>
-                    <a href="#signup" class="btn btn-primary">Get Started</a>
+                    <a href="#signup" class="btn btn-primary">Sign Up</a>
                 </div>
             </div>
         </nav>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Hero Section with Search -->
     <section class="hero" id="home">
         <div class="hero-background">
             <div class="hero-overlay"></div>
-            <div class="hero-pattern"></div>
+            <div class="hero-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+            </div>
         </div>
         <div class="container">
             <div class="hero-content">
-                <span class="hero-badge">✨ Next-Gen Solution</span>
-                <h1 class="hero-title">Streamline Your <span class="highlight">Hostel Management</span> Today</h1>
-                <p class="hero-description">Transform your hostel operations with our comprehensive management system. From room bookings to payment tracking, we've got you covered.</p>
-                <div class="hero-buttons">
-                    <a href="#features" class="btn btn-primary btn-lg">
-                        <i class="fas fa-rocket"></i>
-                        Explore Features
-                    </a>
-                    <a href="#contact" class="btn btn-outline btn-lg">
-                        <i class="fas fa-play"></i>
-                        Watch Demo
-                    </a>
+                <span class="hero-badge">🇳🇵 For Nepali Students</span>
+                <h1 class="hero-title">Find Your <span class="highlight">Perfect Hostel</span> Near Campus</h1>
+                <p class="hero-description">Discover affordable, safe, and comfortable student housing in Nepal. Compare hostels, connect with roommates, and book your new home in minutes.</p>
+            </div>
+            
+            <!-- Search Box -->
+            <div class="search-box">
+                <div class="search-tabs">
+                    <button class="search-tab active" data-tab="rent">Rent</button>
+                    <button class="search-tab" data-tab="roommate">Find Roommate</button>
                 </div>
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <span class="stat-number" data-count="500">0</span>
-                        <span class="stat-label">Hostels</span>
+                <div class="search-form">
+                    <div class="search-field">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <input type="text" placeholder="University or Area" id="locationInput">
                     </div>
-                    <div class="stat-item">
-                        <span class="stat-number" data-count="50000">0</span>
-                        <span class="stat-label">Students</span>
+                    <div class="search-field">
+                        <i class="fas fa-dollar-sign"></i>
+                        <select id="priceRange">
+                            <option value="">Price Range</option>
+                            <option value="0-5000">Under Rs. 5,000</option>
+                            <option value="5000-8000">Rs. 5,000 - 8,000</option>
+                            <option value="8000-12000">Rs. 8,000 - 12,000</option>
+                            <option value="12000+">Rs. 12,000+</option>
+                        </select>
                     </div>
-                    <div class="stat-item">
-                        <span class="stat-number" data-count="98">0</span>
-                        <span class="stat-label">% Satisfaction</span>
+                    <div class="search-field">
+                        <i class="fas fa-bed"></i>
+                        <select id="roomType">
+                            <option value="">Room Type</option>
+                            <option value="shared">Shared Room</option>
+                            <option value="private">Private Room</option>
+                            <option value="studio">Studio</option>
+                            <option value="dorm">Dormitory</option>
+                        </select>
                     </div>
+                    <div class="search-field">
+                        <i class="fas fa-calendar"></i>
+                        <input type="date" id="moveInDate" placeholder="Move-in Date">
+                    </div>
+                    <button class="btn btn-primary btn-search">
+                        <i class="fas fa-search"></i>
+                        Search
+                    </button>
+                </div>
+                <div class="search-filters">
+                    <span class="filter-label">Popular:</span>
+                    <button class="filter-tag" data-filter="wifi">📶 WiFi</button>
+                    <button class="filter-tag" data-filter="meals">🍽️ Meals Included</button>
+                    <button class="filter-tag" data-filter="parking">🅿️ Parking</button>
+                    <button class="filter-tag" data-filter="laundry">👕 Laundry</button>
+                    <button class="filter-tag" data-filter="hotwater">🔥 Hot Water</button>
                 </div>
             </div>
-            <div class="hero-visual">
-                <div class="hero-card main-card">
-                    <div class="card-header">
-                        <div class="card-dots">
-                            <span></span><span></span><span></span>
-                        </div>
-                        <span class="card-title">Dashboard</span>
-                    </div>
-                    <div class="card-content">
-                        <div class="chart-placeholder">
-                            <div class="bar" style="height: 60%"></div>
-                            <div class="bar" style="height: 80%"></div>
-                            <div class="bar" style="height: 45%"></div>
-                            <div class="bar" style="height: 90%"></div>
-                            <div class="bar" style="height: 70%"></div>
-                        </div>
-                        <div class="info-cards">
-                            <div class="info-card">
-                                <i class="fas fa-bed"></i>
-                                <span>120 Rooms</span>
-                            </div>
-                            <div class="info-card">
-                                <i class="fas fa-users"></i>
-                                <span>450 Students</span>
-                            </div>
-                        </div>
-                    </div>
+            
+            <!-- Quick Stats -->
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number" data-count="450">0</span>
+                    <span class="stat-label">Hostels</span>
                 </div>
-                <div class="hero-card floating-card card-1">
-                    <i class="fas fa-calendar-check"></i>
-                    <span>Booking Confirmed</span>
+                <div class="stat-item">
+                    <span class="stat-number" data-count="25000">0</span>
+                    <span class="stat-label">Students</span>
                 </div>
-                <div class="hero-card floating-card card-2">
-                    <i class="fas fa-check-circle"></i>
-                    <span>Payment Received</span>
+                <div class="stat-item">
+                    <span class="stat-number" data-count="35">0</span>
+                    <span class="stat-label">Universities</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-count="4.7">0</span>
+                    <span class="stat-label">Avg Rating</span>
                 </div>
             </div>
-        </div>
-        <div class="scroll-indicator">
-            <a href="#features">
-                <i class="fas fa-chevron-down"></i>
-            </a>
         </div>
     </section>
 
-    <!-- Features Section -->
+    <!-- Featured Hostels Section -->
+    <section class="listings" id="search">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Featured</span>
+                <h2 class="section-title">Popular Hostels This Week</h2>
+                <p class="section-description">Top-rated student housing near top universities in Nepal</p>
+            </div>
+            
+            <!-- View Toggle -->
+            <div class="listings-controls">
+                <div class="view-toggle">
+                    <button class="view-btn active" data-view="grid">
+                        <i class="fas fa-th"></i>
+                    </button>
+                    <button class="view-btn" data-view="list">
+                        <i class="fas fa-list"></i>
+                    </button>
+                </div>
+                <div class="sort-options">
+                    <select id="sortBy">
+                        <option value="popular">Most Popular</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="rating">Highest Rated</option>
+                        <option value="distance">Nearest to Campus</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="listings-grid">
+                <!-- Hostel Card 1 -->
+                <div class="hostel-card">
+                    <div class="hostel-image">
+                        <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=400&h=250&fit=crop" alt="Baneshwor Hostel">
+                        <span class="hostel-badge featured">Featured</span>
+                        <span class="hostel-badge discount">15% OFF</span>
+                        <button class="favorite-btn" aria-label="Add to favorites">
+                            <i class="far fa-heart"></i>
+                        </button>
+                        <div class="hostel-gallery">
+                            <span class="gallery-count"><i class="fas fa-images"></i> 12 photos</span>
+                        </div>
+                    </div>
+                    <div class="hostel-content">
+                        <div class="hostel-rating">
+                            <i class="fas fa-star"></i>
+                            <span>4.9</span>
+                            <span class="rating-count">(234 reviews)</span>
+                        </div>
+                        <h3 class="hostel-name">Baneshwor Student Hostel</h3>
+                        <p class="hostel-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Baneshwor - 0.3 km from TU Campus
+                        </p>
+                        <div class="hostel-amenities">
+                            <span class="amenity" title="Free WiFi"><i class="fas fa-wifi"></i></span>
+                            <span class="amenity" title="Meals Included"><i class="fas fa-utensils"></i></span>
+                            <span class="amenity" title="Laundry"><i class="fas fa-tshirt"></i></span>
+                            <span class="amenity" title="24/7 Security"><i class="fas fa-shield-alt"></i></span>
+                            <span class="amenity" title="Study Room"><i class="fas fa-book"></i></span>
+                        </div>
+                        <div class="hostel-pricing">
+                            <div class="price">
+                                <span class="original-price">Rs. 8,000</span>
+                                <span class="current-price">Rs. 6,800</span>
+                                <span class="price-period">/month</span>
+                            </div>
+                            <div class="price-note">Student discount applied!</div>
+                        </div>
+                        <div class="hostel-actions">
+                            <a href="#" class="btn btn-outline btn-sm">
+                                <i class="fas fa-balance-scale"></i> Compare
+                            </a>
+                            <a href="#" class="btn btn-primary btn-sm">
+                                <i class="fas fa-calendar-check"></i> Book Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Hostel Card 2 -->
+                <div class="hostel-card">
+                    <div class="hostel-image">
+                        <img src="https://images.unsplash.com/photo-1556020685-ae41abfc9365?w=400&h=250&fit=crop" alt="Patan Hostel">
+                        <span class="hostel-badge popular">Popular</span>
+                        <button class="favorite-btn" aria-label="Add to favorites">
+                            <i class="far fa-heart"></i>
+                        </button>
+                        <div class="hostel-gallery">
+                            <span class="gallery-count"><i class="fas fa-bed"></i> Available</span>
+                        </div>
+                    </div>
+                    <div class="hostel-content">
+                        <div class="hostel-rating">
+                            <i class="fas fa-star"></i>
+                            <span>4.8</span>
+                            <span class="rating-count">(189 reviews)</span>
+                        </div>
+                        <h3 class="hostel-name">Patan Lakeside Hostel</h3>
+                        <p class="hostel-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Patan - 0.5 km from Patan College
+                        </p>
+                        <div class="hostel-amenities">
+                            <span class="amenity" title="Free WiFi"><i class="fas fa-wifi"></i></span>
+                            <span class="amenity" title="Gym"><i class="fas fa-dumbbell"></i></span>
+                            <span class="amenity" title="Rooftop"><i class="fas fa-building"></i></span>
+                            <span class="amenity" title="Game Room"><i class="fas fa-gamepad"></i></span>
+                            <span class="amenity" title="Hot Water"><i class="fas fa-hot-tub"></i></span>
+                        </div>
+                        <div class="hostel-pricing">
+                            <div class="price">
+                                <span class="current-price">Rs. 7,500</span>
+                                <span class="price-period">/month</span>
+                            </div>
+                            <div class="price-note">Flexible payment plans</div>
+                        </div>
+                        <div class="hostel-actions">
+                            <a href="#" class="btn btn-outline btn-sm">
+                                <i class="fas fa-balance-scale"></i> Compare
+                            </a>
+                            <a href="#" class="btn btn-primary btn-sm">
+                                <i class="fas fa-calendar-check"></i> Book Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Hostel Card 3 -->
+                <div class="hostel-card">
+                    <div class="hostel-image">
+                        <img src="https://images.unsplash.com/photo-1516939884455-1445c8652f83?w=400&h=250&fit=crop" alt="Kumaripati Hostel">
+                        <span class="hostel-badge new">New</span>
+                        <button class="favorite-btn" aria-label="Add to favorites">
+                            <i class="far fa-heart"></i>
+                        </button>
+                        <div class="hostel-gallery">
+                            <span class="gallery-count"><i class="fas fa-images"></i> 8 photos</span>
+                        </div>
+                    </div>
+                    <div class="hostel-content">
+                        <div class="hostel-rating">
+                            <i class="fas fa-star"></i>
+                            <span>4.7</span>
+                            <span class="rating-count">(156 reviews)</span>
+                        </div>
+                        <h3 class="hostel-name">Kumaripati Student Nest</h3>
+                        <p class="hostel-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Kumaripati - 0.2 km from IOE Campus
+                        </p>
+                        <div class="hostel-amenities">
+                            <span class="amenity" title="Free WiFi"><i class="fas fa-wifi"></i></span>
+                            <span class="amenity" title="AC"><i class="fas fa-snowflake"></i></span>
+                            <span class="amenity" title="Kitchen"><i class="fas fa-blender"></i></span>
+                            <span class="amenity" title="Parking"><i class="fas fa-parking"></i></span>
+                            <span class="amenity" title="Canteen"><i class="fas fa-hamburger"></i></span>
+                        </div>
+                        <div class="hostel-pricing">
+                            <div class="price">
+                                <span class="current-price">Rs. 5,500</span>
+                                <span class="price-period">/month</span>
+                            </div>
+                            <div class="price-note">Move-in special!</div>
+                        </div>
+                        <div class="hostel-actions">
+                            <a href="#" class="btn btn-outline btn-sm">
+                                <i class="fas fa-balance-scale"></i> Compare
+                            </a>
+                            <a href="#" class="btn btn-primary btn-sm">
+                                <i class="fas fa-calendar-check"></i> Book Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Hostel Card 4 -->
+                <div class="hostel-card">
+                    <div class="hostel-image">
+                        <img src="https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?w=400&h=250&fit=crop" alt="Thamel Hostel">
+                        <span class="hostel-badge popular">Popular</span>
+                        <button class="favorite-btn" aria-label="Add to favorites">
+                            <i class="far fa-heart"></i>
+                        </button>
+                        <div class="hostel-gallery">
+                            <span class="gallery-count"><i class="fas fa-images"></i> 10 photos</span>
+                        </div>
+                    </div>
+                    <div class="hostel-content">
+                        <div class="hostel-rating">
+                            <i class="fas fa-star"></i>
+                            <span>4.8</span>
+                            <span class="rating-count">(312 reviews)</span>
+                        </div>
+                        <h3 class="hostel-name">Thamel Backpacker Hostel</h3>
+                        <p class="hostel-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Thamel - 1 km from NEBU College
+                        </p>
+                        <div class="hostel-amenities">
+                            <span class="amenity" title="Free WiFi"><i class="fas fa-wifi"></i></span>
+                            <span class="amenity" title="Common Room"><i class="fas fa-couch"></i></span>
+                            <span class="amenity" title="Rooftop"><i class="fas fa-building"></i></span>
+                            <span class="amenity" title="Travel Desk"><i class="fas fa-suitcase"></i></span>
+                            <span class="amenity" title="Laundry"><i class="fas fa-tshirt"></i></span>
+                        </div>
+                        <div class="hostel-pricing">
+                            <div class="price">
+                                <span class="current-price">Rs. 4,500</span>
+                                <span class="price-period">/month</span>
+                            </div>
+                            <div class="price-note">Best value in town!</div>
+                        </div>
+                        <div class="hostel-actions">
+                            <a href="#" class="btn btn-outline btn-sm">
+                                <i class="fas fa-balance-scale"></i> Compare
+                            </a>
+                            <a href="#" class="btn btn-primary btn-sm">
+                                <i class="fas fa-calendar-check"></i> Book Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Hostel Card 5 -->
+                <div class="hostel-card">
+                    <div class="hostel-image">
+                        <img src="https://images.unsplash.com/photo-1584132915807-fd1f5fbc078f?w=400&h=250&fit=crop" alt="Koteshwor Hostel">
+                        <span class="hostel-badge featured">Featured</span>
+                        <button class="favorite-btn" aria-label="Add to favorites">
+                            <i class="far fa-heart"></i>
+                        </button>
+                        <div class="hostel-gallery">
+                            <span class="gallery-count"><i class="fas fa-bed"></i> Available</span>
+                        </div>
+                    </div>
+                    <div class="hostel-content">
+                        <div class="hostel-rating">
+                            <i class="fas fa-star"></i>
+                            <span>4.6</span>
+                            <span class="rating-count">(98 reviews)</span>
+                        </div>
+                        <h3 class="hostel-name">Koteshwor College Hostel</h3>
+                        <p class="hostel-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Koteshwor - 0.4 km from Baneshwor College
+                        </p>
+                        <div class="hostel-amenities">
+                            <span class="amenity" title="Free WiFi"><i class="fas fa-wifi"></i></span>
+                            <span class="amenity" title="Mess"><i class="fas fa-utensils"></i></span>
+                            <span class="amenity" title="Hot Water"><i class="fas fa-hot-tub"></i></span>
+                            <span class="amenity" title="Study Room"><i class="fas fa-book"></i></span>
+                            <span class="amenity" title="Garden"><i class="fas fa-leaf"></i></span>
+                        </div>
+                        <div class="hostel-pricing">
+                            <div class="price">
+                                <span class="current-price">Rs. 6,000</span>
+                                <span class="price-period">/month</span>
+                            </div>
+                            <div class="price-note">Includes meals!</div>
+                        </div>
+                        <div class="hostel-actions">
+                            <a href="#" class="btn btn-outline btn-sm">
+                                <i class="fas fa-balance-scale"></i> Compare
+                            </a>
+                            <a href="#" class="btn btn-primary btn-sm">
+                                <i class="fas fa-calendar-check"></i> Book Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Hostel Card 6 -->
+                <div class="hostel-card">
+                    <div class="hostel-image">
+                        <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=400&h=250&fit=crop" alt="Lazimpat Hostel">
+                        <span class="hostel-badge new">New</span>
+                        <button class="favorite-btn" aria-label="Add to favorites">
+                            <i class="far fa-heart"></i>
+                        </button>
+                        <div class="hostel-gallery">
+                            <span class="gallery-count"><i class="fas fa-images"></i> 6 photos</span>
+                        </div>
+                    </div>
+                    <div class="hostel-content">
+                        <div class="hostel-rating">
+                            <i class="fas fa-star"></i>
+                            <span>4.5</span>
+                            <span class="rating-count">(67 reviews)</span>
+                        </div>
+                        <h3 class="hostel-name">Lazimpat Premium Hostel</h3>
+                        <p class="hostel-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Lazimpat - 0.6 km from Trinity College
+                        </p>
+                        <div class="hostel-amenities">
+                            <span class="amenity" title="Free WiFi"><i class="fas fa-wifi"></i></span>
+                            <span class="amenity" title="AC"><i class="fas fa-snowflake"></i></span>
+                            <span class="amenity" title="Gym"><i class="fas fa-dumbbell"></i></span>
+                            <span class="amenity" title="Parking"><i class="fas fa-parking"></i></span>
+                            <span class="amenity" title="Cafe"><i class="fas fa-coffee"></i></span>
+                        </div>
+                        <div class="hostel-pricing">
+                            <div class="price">
+                                <span class="current-price">Rs. 10,000</span>
+                                <span class="price-period">/month</span>
+                            </div>
+                            <div class="price-note">Premium facilities</div>
+                        </div>
+                        <div class="hostel-actions">
+                            <a href="#" class="btn btn-outline btn-sm">
+                                <i class="fas fa-balance-scale"></i> Compare
+                            </a>
+                            <a href="#" class="btn btn-primary btn-sm">
+                                <i class="fas fa-calendar-check"></i> Book Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="listings-cta">
+                <a href="#all-hostels" class="btn btn-outline btn-lg">
+                    View All 450+ Hostels
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features / Why Choose Us -->
     <section class="features" id="features">
         <div class="container">
             <div class="section-header">
-                <span class="section-tag">Features</span>
-                <h2 class="section-title">Everything You Need</h2>
-                <p class="section-description">Powerful tools to manage your hostel efficiently</p>
+                <span class="section-tag">Why HostelNest</span>
+                <h2 class="section-title">Everything You Need to Find Your Home</h2>
+                <p class="section-description">We make finding and booking student housing simple in Nepal</p>
             </div>
             <div class="features-grid">
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-calendar-alt"></i>
+                        <i class="fas fa-search-plus"></i>
                     </div>
-                    <h3 class="feature-title">Room Booking</h3>
-                    <p class="feature-description">Efficient room allocation and booking system with real-time availability tracking and automated confirmation.</p>
-                    <a href="#" class="feature-link">Learn more <i class="fas fa-arrow-right"></i></a>
+                    <h3 class="feature-title">Smart Search</h3>
+                    <p class="feature-description">Filter by price, location, amenities, and more to find your perfect match.</p>
                 </div>
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-user-graduate"></i>
+                        <i class="fas fa-balance-scale"></i>
                     </div>
-                    <h3 class="feature-title">Student Management</h3>
-                    <p class="feature-description">Comprehensive student profiles, attendance tracking, and document management in one centralized system.</p>
-                    <a href="#" class="feature-link">Learn more <i class="fas fa-arrow-right"></i></a>
+                    <h3 class="feature-title">Easy Comparison</h3>
+                    <p class="feature-description">Compare hostels side-by-side with detailed specs and real student reviews.</p>
                 </div>
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-credit-card"></i>
+                        <i class="fas fa-video"></i>
                     </div>
-                    <h3 class="feature-title">Payment Tracking</h3>
-                    <p class="feature-description">Streamlined fee collection, automated reminders, and detailed financial reports with multiple payment options.</p>
-                    <a href="#" class="feature-link">Learn more <i class="fas fa-arrow-right"></i></a>
+                    <h3 class="feature-title">Virtual Tours</h3>
+                    <p class="feature-description">Explore hostels from anywhere with 360° virtual tours and video walkthroughs.</p>
                 </div>
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-tools"></i>
+                        <i class="fas fa-user-friends"></i>
                     </div>
-                    <h3 class="feature-title">Facility Management</h3>
-                    <p class="feature-description">Maintain and monitor hostel facilities with maintenance requests, inventory tracking, and inspection schedules.</p>
-                    <a href="#" class="feature-link">Learn more <i class="fas fa-arrow-right"></i></a>
+                    <h3 class="feature-title">Roommate Matching</h3>
+                    <p class="feature-description">Find compatible roommates based on lifestyle, habits, and preferences.</p>
                 </div>
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
+                <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-chart-line"></i>
+                        <i class="fas fa-calculator"></i>
                     </div>
-                    <h3 class="feature-title">Analytics & Reports</h3>
-                    <p class="feature-description">Data-driven insights with customizable reports, occupancy analytics, and revenue forecasting.</p>
-                    <a href="#" class="feature-link">Learn more <i class="fas fa-arrow-right"></i></a>
+                    <h3 class="feature-title">Budget Calculator</h3>
+                    <p class="feature-description">Plan your expenses with our all-in-one budget calculator including all costs.</p>
                 </div>
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="600">
+                <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-bell"></i>
+                        <i class="fas fa-shield-alt"></i>
                     </div>
-                    <h3 class="feature-title">Notifications</h3>
-                    <p class="feature-description">Instant notifications for announcements, events, and important updates via multiple channels.</p>
-                    <a href="#" class="feature-link">Learn more <i class="fas fa-arrow-right"></i></a>
+                    <h3 class="feature-title">Verified Listings</h3>
+                    <p class="feature-description">All hostels are verified and inspected for safety and quality standards.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Stats Section -->
-    <section class="stats" id="stats">
+    <!-- Budget Calculator Section -->
+    <section class="budget-calculator" id="calculator">
         <div class="container">
-            <div class="stats-grid">
-                <div class="stat-box">
-                    <div class="stat-icon">
-                        <i class="fas fa-building"></i>
+            <div class="calculator-wrapper">
+                <div class="calculator-content">
+                    <span class="section-tag">Budget Planner</span>
+                    <h2 class="section-title">Calculate Your Monthly Budget</h2>
+                    <p class="section-description">Plan your expenses including rent, food, transport, and more.</p>
+                    
+                    <div class="calculator-form">
+                        <div class="calc-input-group">
+                            <label>Rent</label>
+                            <div class="calc-input">
+                                <span>Rs.</span>
+                                <input type="number" id="rentInput" value="6000" min="0" step="500">
+                            </div>
+                        </div>
+                        <div class="calc-input-group">
+                            <label>Food & Groceries</label>
+                            <div class="calc-input">
+                                <span>Rs.</span>
+                                <input type="number" id="foodInput" value="3500" min="0" step="250">
+                            </div>
+                        </div>
+                        <div class="calc-input-group">
+                            <label>Transportation</label>
+                            <div class="calc-input">
+                                <span>Rs.</span>
+                                <input type="number" id="transportInput" value="1000" min="0" step="100">
+                            </div>
+                        </div>
+                        <div class="calc-input-group">
+                            <label>Utilities & Internet</label>
+                            <div class="calc-input">
+                                <span>Rs.</span>
+                                <input type="number" id="utilitiesInput" value="1000" min="0" step="250">
+                            </div>
+                        </div>
+                        <div class="calc-input-group">
+                            <label>Personal & Entertainment</label>
+                            <div class="calc-input">
+                                <span>Rs.</span>
+                                <input type="number" id="personalInput" value="1500" min="0" step="250">
+                            </div>
+                        </div>
                     </div>
-                    <div class="stat-info">
-                        <span class="stat-number" data-count="500">0</span>
-                        <span class="stat-suffix">+</span>
-                        <span class="stat-text">Hostel Capacity</span>
+                    
+                    <div class="calculator-result">
+                        <div class="result-row total">
+                            <span>Total Monthly Budget</span>
+                            <span class="result-value" id="totalBudget">Rs. 13,000</span>
+                        </div>
+                        <div class="result-row">
+                            <span>Student Discount (10%)</span>
+                            <span class="result-value discount">-Rs. 1,300</span>
+                        </div>
+                        <div class="result-row final">
+                            <span>Final Total</span>
+                            <span class="result-value" id="finalBudget">Rs. 11,700</span>
+                        </div>
                     </div>
                 </div>
-                <div class="stat-box">
-                    <div class="stat-icon">
-                        <i class="fas fa-smile"></i>
+                <div class="calculator-visual">
+                    <div class="budget-chart">
+                        <div class="chart-ring" style="--percent: 45;">
+                            <span class="chart-center">Rs. 11,700</span>
+                        </div>
                     </div>
-                    <div class="stat-info">
-                        <span class="stat-number" data-count="50000">0</span>
-                        <span class="stat-suffix">+</span>
-                        <span class="stat-text">Satisfied Students</span>
-                    </div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-icon">
-                        <i class="fas fa-concierge-bell"></i>
-                    </div>
-                    <div class="stat-info">
-                        <span class="stat-number" data-count="150">0</span>
-                        <span class="stat-suffix">+</span>
-                        <span class="stat-text">Facilities</span>
-                    </div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-icon">
-                        <i class="fas fa-award"></i>
-                    </div>
-                    <div class="stat-info">
-                        <span class="stat-number" data-count="15">0</span>
-                        <span class="stat-suffix">+</span>
-                        <span class="stat-text">Years Experience</span>
+                    <div class="budget-breakdown">
+                        <div class="breakdown-item">
+                            <span class="dot" style="background: #4F46E5;"></span>
+                            <span>Rent (51%)</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="dot" style="background: #10B981;"></span>
+                            <span>Food (30%)</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="dot" style="background: #F59E0B;"></span>
+                            <span>Transport (9%)</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="dot" style="background: #EC4899;"></span>
+                            <span>Utilities (9%)</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="dot" style="background: #8B5CF6;"></span>
+                            <span>Personal (13%)</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Testimonials Section -->
-    <section class="testimonials" id="testimonials">
+    <!-- Neighborhoods Section -->
+    <section class="neighborhoods" id="neighborhoods">
         <div class="container">
             <div class="section-header">
-                <span class="section-tag">Testimonials</span>
-                <h2 class="section-title">What People Say</h2>
-                <p class="section-description">Hear from hostel managers and students</p>
+                <span class="section-tag">Explore Areas</span>
+                <h2 class="section-title">Popular Student Areas in Kathmandu</h2>
+                <p class="section-description">Find the best areas near top universities</p>
+            </div>
+            <div class="neighborhoods-grid">
+                <div class="neighborhood-card large">
+                    <img src="https://images.unsplash.com/photo-1572412106462-c4c11c6d9e02?w=600&h=400&fit=crop" alt="Baneshwor">
+                    <div class="neighborhood-overlay">
+                        <h3>Baneshwor</h3>
+                        <p>35 Hostels • TU Campus Area</p>
+                        <span class="price-range">From Rs. 5,000/mo</span>
+                    </div>
+                </div>
+                <div class="neighborhood-card">
+                    <img src="https://images.unsplash.com/photo-1600607687646-aac4c205888d?w=400&h=200&fit=crop" alt="Patan">
+                    <div class="neighborhood-overlay">
+                        <h3>Patan</h3>
+                        <p>28 Hostels • Patan College Area</p>
+                        <span class="price-range">From Rs. 6,000/mo</span>
+                    </div>
+                </div>
+                <div class="neighborhood-card">
+                    <img src="https://images.unsplash.com/photo-1572411077614-1865c36536c2?w=400&h=200&fit=crop" alt="Thamel">
+                    <div class="neighborhood-overlay">
+                        <h3>Thamel</h3>
+                        <p>25 Hostels • City Center</p>
+                        <span class="price-range">From Rs. 4,500/mo</span>
+                    </div>
+                </div>
+                <div class="neighborhood-card">
+                    <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?w=400&h=200&fit=crop" alt="Kumaripati">
+                    <div class="neighborhood-overlay">
+                        <h3>Kumaripati</h3>
+                        <p>22 Hostels • IOE Campus</p>
+                        <span class="price-range">From Rs. 5,500/mo</span>
+                    </div>
+                </div>
+                <div class="neighborhood-card">
+                    <img src="https://images.unsplash.com/photo-1598528749234-e4c6d3d46085?w=400&h=200&fit=crop" alt="Koteshwor">
+                    <div class="neighborhood-overlay">
+                        <h3>Koteshwor</h3>
+                        <p>18 Hostels • Baneshwor College</p>
+                        <span class="price-range">From Rs. 5,000/mo</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Student Reviews -->
+    <section class="testimonials" id="reviews">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Student Stories</span>
+                <h2 class="section-title">What Nepali Students Say</h2>
+                <p class="section-description">Real experiences from students who found their perfect home</p>
             </div>
             <div class="testimonials-grid">
                 <div class="testimonial-card">
                     <div class="testimonial-header">
                         <div class="testimonial-avatar">
-                            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&h=100&fit=crop&crop=face" alt="John Smith">
+                            <img src="https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=100&h=100&fit=crop&crop=face" alt="Priya Sharma">
                         </div>
                         <div class="testimonial-info">
-                            <h4>John Smith</h4>
-                            <span>Hostel Manager</span>
+                            <h4>Priya Sharma</h4>
+                            <span>Computer Science, TU</span>
                         </div>
                         <div class="testimonial-rating">
                             <i class="fas fa-star"></i>
@@ -255,16 +688,20 @@
                             <i class="fas fa-star"></i>
                         </div>
                     </div>
-                    <p class="testimonial-text">"HostelHub has transformed how we manage our facility. The room booking system is intuitive and the payment tracking saves us hours every week."</p>
+                    <p class="testimonial-text">"Found my dream hostel near TU in just 3 days! The virtual tour was amazing and the roommate matching helped me find the perfect flatmates from my college."</p>
+                    <div class="testimonial-hostel">
+                        <i class="fas fa-bed"></i>
+                        Baneshwor Student Hostel
+                    </div>
                 </div>
                 <div class="testimonial-card">
                     <div class="testimonial-header">
                         <div class="testimonial-avatar">
-                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&h=100&fit=crop&crop=face" alt="Sarah Johnson">
+                            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop&crop=face" alt="Rajesh Kumar">
                         </div>
                         <div class="testimonial-info">
-                            <h4>Sarah Johnson</h4>
-                            <span>Student</span>
+                            <h4>Rajesh Kumar</h4>
+                            <span>Engineering, IOE</span>
                         </div>
                         <div class="testimonial-rating">
                             <i class="fas fa-star"></i>
@@ -274,16 +711,20 @@
                             <i class="fas fa-star"></i>
                         </div>
                     </div>
-                    <p class="testimonial-text">"Booking my room was so easy! The app is user-friendly and I can track my payments and announcements in one place. Highly recommended!"</p>
+                    <p class="testimonial-text">"The budget calculator was a lifesaver! Helped me plan my expenses perfectly. The prices in NPR are very affordable for Nepali students."</p>
+                    <div class="testimonial-hostel">
+                        <i class="fas fa-bed"></i>
+                        Kumaripati Student Nest
+                    </div>
                 </div>
                 <div class="testimonial-card">
                     <div class="testimonial-header">
                         <div class="testimonial-avatar">
-                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face" alt="Michael Chen">
+                            <img src="https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=100&h=100&fit=crop&crop=face" alt="Anita Rai">
                         </div>
                         <div class="testimonial-info">
-                            <h4>Michael Chen</h4>
-                            <span>Administrator</span>
+                            <h4>Anita Rai</h4>
+                            <span>Arts, Patan College</span>
                         </div>
                         <div class="testimonial-rating">
                             <i class="fas fa-star"></i>
@@ -293,7 +734,105 @@
                             <i class="fas fa-star-half-alt"></i>
                         </div>
                     </div>
-                    <p class="testimonial-text">"The analytics and reporting features are exceptional. We can make data-driven decisions and improve our services based on real insights."</p>
+                    <p class="testimonial-text">"Love the comparison feature! Could easily see all options near Patan. The flexible payment plan was perfect for my budget as a student."</p>
+                    <div class="testimonial-hostel">
+                        <i class="fas fa-bed"></i>
+                        Patan Lakeside Hostel
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Deals & Promotions -->
+    <section class="deals" id="deals">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Special Offers</span>
+                <h2 class="section-title">Student Deals & Promotions</h2>
+                <p class="section-description">Exclusive discounts for Nepali students</p>
+            </div>
+            <div class="deals-grid">
+                <div class="deal-card">
+                    <div class="deal-badge">Limited Time</div>
+                    <div class="deal-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Student Discount</h3>
+                    <p>Get 15% off your first semester when you verify with your college ID.</p>
+                    <a href="#" class="deal-link">Claim Now <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="deal-card">
+                    <div class="deal-badge">Popular</div>
+                    <div class="deal-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Refer a Friend</h3>
+                    <p>Invite friends and both get Rs. 500 credit towards your next month rent.</p>
+                    <a href="#" class="deal-link">Invite Friends <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="deal-card">
+                    <div class="deal-badge">New</div>
+                    <div class="deal-icon">
+                        <i class="fas fa-calendar-plus"></i>
+                    </div>
+                    <h3>Early Bird</h3>
+                    <p>Book 2 months in advance and get 20% off plus free move-in cleaning.</p>
+                    <a href="#" class="deal-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="deal-card">
+                    <div class="deal-badge">Flexible</div>
+                    <div class="deal-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h3>Payment Plans</h3>
+                    <p>Split your rent into 4 easy monthly payments at 0% interest.</p>
+                    <a href="#" class="deal-link">View Plans <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Inquiry Section -->
+    <section class="integrations">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Get Started</span>
+                <h2 class="section-title">Create Your Account</h2>
+                <p class="section-description">Quick and easy ways to sign up</p>
+            </div>
+            <div class="integrations-grid">
+                <div class="integration-card">
+                    <div class="integration-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h4>Email Sign Up</h4>
+                    <p>Create account with your email</p>
+                    <a href="#" class="btn btn-outline btn-sm">Sign Up Free</a>
+                </div>
+                <div class="integration-card">
+                    <div class="integration-icon">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <h4>Student Verification</h4>
+                    <p>Verify with college ID for discounts</p>
+                    <a href="#" class="btn btn-outline btn-sm">Verify ID</a>
+                </div>
+                <div class="integration-card">
+                    <div class="integration-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <h4>Booking Inquiry</h4>
+                    <p>Call us for instant booking</p>
+                    <a href="#" class="btn btn-outline btn-sm">Call: 01-4XXXXXX</a>
+                </div>
+                <div class="integration-card">
+                    <div class="integration-icon">
+                        <i class="fab fa-viber"></i>
+                    </div>
+                    <h4>WhatsApp / Viber</h4>
+                    <p>Chat with us on messenger</p>
+                    <a href="#" class="btn btn-outline btn-sm">Message Us</a>
                 </div>
             </div>
         </div>
@@ -303,16 +842,17 @@
     <section class="cta">
         <div class="container">
             <div class="cta-content">
-                <h2 class="cta-title">Ready to Transform Your Hostel Management?</h2>
-                <p class="cta-description">Join hundreds of hostels already using HostelHub to streamline their operations.</p>
+                <span class="cta-badge">🎉 Limited Time Offer</span>
+                <h2 class="cta-title">Ready to Find Your New Home?</h2>
+                <p class="cta-description">Join 25,000+ Nepali students who found their perfect hostel. Get Rs. 500 credit on your first booking!</p>
                 <div class="cta-buttons">
-                    <a href="#signup" class="btn btn-primary btn-lg">
-                        <i class="fas fa-user-plus"></i>
-                        Get Started Free
+                    <a href="#search" class="btn btn-primary btn-lg">
+                        <i class="fas fa-search"></i>
+                        Browse Hostels
                     </a>
-                    <a href="#contact" class="btn btn-outline btn-lg">
-                        <i class="fas fa-envelope"></i>
-                        Contact Sales
+                    <a href="#calculator" class="btn btn-outline btn-lg">
+                        <i class="fas fa-calculator"></i>
+                        Calculate Budget
                     </a>
                 </div>
             </div>
@@ -325,10 +865,10 @@
             <div class="footer-grid">
                 <div class="footer-brand">
                     <a href="#" class="logo">
-                        <i class="fas fa-building"></i>
-                        <span>HostelHub</span>
+                        <i class="fas fa-bed"></i>
+                        <span>HostelNest Nepal</span>
                     </a>
-                    <p class="footer-description">Modern hostel management solution for efficient operations and enhanced student experience.</p>
+                    <p class="footer-description">Find your perfect student home in Nepal. Safe, affordable, and convenient housing near campus.</p>
                     <div class="social-links">
                         <a href="#" class="social-link" aria-label="Facebook">
                             <i class="fab fa-facebook-f"></i>
@@ -339,29 +879,29 @@
                         <a href="#" class="social-link" aria-label="Instagram">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="#" class="social-link" aria-label="LinkedIn">
-                            <i class="fab fa-linkedin-in"></i>
+                        <a href="#" class="social-link" aria-label="Viber">
+                            <i class="fab fa-viber"></i>
                         </a>
                     </div>
                 </div>
                 <div class="footer-links">
-                    <h4>Quick Links</h4>
+                    <h4>Browse</h4>
                     <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#features">Features</a></li>
-                        <li><a href="#stats">Statistics</a></li>
-                        <li><a href="#testimonials">Testimonials</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#search">All Hostels</a></li>
+                        <li><a href="#neighborhoods">Areas</a></li>
+                        <li><a href="#">Near Universities</a></li>
+                        <li><a href="#">Roommate Matching</a></li>
+                        <li><a href="#">Virtual Tours</a></li>
                     </ul>
                 </div>
                 <div class="footer-links">
-                    <h4>Features</h4>
+                    <h4>Company</h4>
                     <ul>
-                        <li><a href="#">Room Booking</a></li>
-                        <li><a href="#">Student Management</a></li>
-                        <li><a href="#">Payment Tracking</a></li>
-                        <li><a href="#">Facility Management</a></li>
-                        <li><a href="#">Analytics</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">How It Works</a></li>
+                        <li><a href="#">For Hostels</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Careers</a></li>
                     </ul>
                 </div>
                 <div class="footer-contact">
@@ -369,24 +909,29 @@
                     <ul>
                         <li>
                             <i class="fas fa-map-marker-alt"></i>
-                            <span>123 Hostel Street, City, Country</span>
+                            <span>Baneshwor, Kathmandu, Nepal</span>
                         </li>
                         <li>
                             <i class="fas fa-phone"></i>
-                            <span>+1 234 567 890</span>
+                            <span>+977 01-4XXXXXX</span>
                         </li>
                         <li>
                             <i class="fas fa-envelope"></i>
-                            <span>support@hostelhub.com</span>
+                            <span>hello@hostelnest.com.np</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-headset"></i>
+                            <span>24/7 Student Support</span>
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 HostelHub. All rights reserved.</p>
+                <p>&copy; 2026 HostelNest Nepal. Made with ❤️ for Nepali students.</p>
                 <div class="footer-legal">
                     <a href="#">Privacy Policy</a>
                     <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
                 </div>
             </div>
         </div>
