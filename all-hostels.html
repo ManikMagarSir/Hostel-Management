@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Hostels - HostelNest Nepal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            padding: 60px 0;
+            color: white;
+            text-align: center;
+        }
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .page-header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        .search-section {
+            padding: 30px 0;
+            background: var(--gray-100);
+        }
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+        }
+        .filter-bar select,
+        .filter-bar input {
+            padding: 12px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            font-family: var(--font-primary);
+            font-size: 0.95rem;
+            min-width: 180px;
+            background: white;
+        }
+        .filter-bar select:focus,
+        .filter-bar input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        .results-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--gray-200);
+            margin-bottom: 30px;
+        }
+        .results-count {
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        .view-toggle {
+            display: flex;
+            gap: 10px;
+        }
+        .view-toggle button {
+            padding: 10px 14px;
+            border: 2px solid var(--gray-200);
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .view-toggle button.active,
+        .view-toggle button:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .hostels-grid.list-view {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .hostels-grid.list-view .hostel-card {
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+        }
+
+
+        .hostels-grid.list-view .hostel-image {
+            width: 260px;
+            flex-shrink: 0;
+        }
+
+        .hostels-grid.list-view .hostel-image img {
+            height: 100%;
+        }
+
+        .hostels-grid.list-view .hostel-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex: 1;
+        }
+
+        .hostels-grid.list-view .hostel-image {
+            width: 280px;
+            flex-shrink: 0;
+        }
+
+        .hostels-grid.list-view .hostel-content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .hostels-grid.list-view .hostel-footer {
+            flex-direction: column;
+            gap: 15px;
+        }
+        .hostels-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            padding-bottom: 60px;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 40px 0;
+        }
+        .pagination a,
+        .pagination span {
+            padding: 10px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: 8px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .pagination a.active,
+        .pagination a:hover {
+            border-color: var(--primary-color);
+            background: var(--primary-color);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Header -->
+    <header class="header" id="header">
+        <nav class="navbar">
+            <div class="container">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-bed"></i>
+                    <span>HostelNest Nepal</span>
+                </a>
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html#home" class="nav-link">Home</a></li>
+                    <li><a href="#search" class="nav-link">Browse Hostels</a></li>
+                    <li><a href="#neighborhoods" class="nav-link">Areas</a></li>
+                    <li><a href="#reviews" class="nav-link">Reviews</a></li>
+                    <li><a href="#deals" class="nav-link">Deals</a></li>
+                </ul>
+                <div class="nav-buttons">
+                    <button class="btn btn-outline" id="loginBtn">Login</button>
+                    <button class="btn btn-primary" id="signupBtn">Sign Up</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>All Hostels</h1>
+            <p>Find your perfect student accommodation in Nepal</p>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="search-section" id="search">
+        <div class="container">
+            <div class="filter-bar">
+                <select id="locationFilter">
+                    <option value="">All Locations</option>
+                    <option value="kathmandu">Kathmandu</option>
+                    <option value="patan">Patan</option>
+                    <option value="bhaktapur">Bhaktapur</option>
+                </select>
+                <select id="priceFilter">
+                    <option value="">All Prices</option>
+                    <option value="0-5000">Under Rs. 5,000</option>
+                    <option value="5000-8000">Rs. 5,000 - 8,000</option>
+                    <option value="8000-12000">Rs. 8,000 - 12,000</option>
+                    <option value="12000+">Rs. 12,000+</option>
+                </select>
+                <select id="roomTypeFilter">
+                    <option value="">All Room Types</option>
+                    <option value="shared">Shared Room</option>
+                    <option value="private">Private Room</option>
+                    <option value="studio">Studio</option>
+                    <option value="dorm">Dormitory</option>
+                </select>
+                <input type="text" id="searchInput" placeholder="Search hostels...">
+                <button class="btn btn-primary">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hostels Grid -->
+    <section class="listings" id="all-hostels">
+        <div class="container">
+            <div class="results-bar">
+                <span class="results-count">Showing <strong>45</strong> hostels</span>
+                <div class="view-toggle">
+                    <button class="active" data-view="grid" title="Grid view"><i class="fas fa-th"></i></button>
+                    <button data-view="list" title="List view"><i class="fas fa-list"></i></button>
+                </div>
+            </div>
+            <div class="hostels-grid" id="hostelsGrid">
+                <!-- Hostel cards will be loaded here -->
+                <div class="hostel-card">
+                    <div class="hostel-image">
+                        <img src="https://images.unsplash.com/photo-1555854877-bab0b564bdf5?w=400&h=300&fit=crop" alt="Hostel">
+                        <span class="hostel-badge">Popular</span>
+                        <button class="favorite-btn"><i class="fas fa-heart"></i></button>
+                    </div>
+                    <div class="hostel-content">
+                        <div class="hostel-rating">
+                            <i class="fas fa-star"></i>
+                            <span>4.8</span>
+                            <span class="reviews">(128 reviews)</span>
+                        </div>
+                        <h3>Kamal Pokhari Hostel</h3>
+                        <p class="hostel-location"><i class="fas fa-map-marker-alt"></i> Kamal Pokhari, Kathmandu</p>
+                        <div class="hostel-features">
+                            <span><i class="fas fa-wifi"></i> WiFi</span>
+                            <span><i class="fas fa-shower"></i> Hot Water</span>
+                            <span><i class="fas fa-utensils"></i> Meals</span>
+                        </div>
+                        <div class="hostel-footer">
+                            <div class="current-price">
+                                <span class="price-amount">Rs. 8,500</span>
+                                <span class="price-period">/month</span>
+                            </div>
+                            <a href="#" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hostel-card">
+                    <div class="hostel-image">
+                        <img src="https://images.unsplash.com/photo-1520277739331-7bf7dd1b8e1f?w=400&h=300&fit=crop" alt="Hostel">
+                        <span class="hostel-badge">Featured</span>
+                        <button class="favorite-btn"><i class="fas fa-heart"></i></button>
+                    </div>
+                    <div class="hostel-content">
+                        <div class="hostel-rating">
+                            <i class="fas fa-star"></i>
+                            <span>4.6</span>
+                            <span class="reviews">(95 reviews)</span>
+                        </div>
+                        <h3>Thamel Backpackers</h3>
+                        <p class="hostel-location"><i class="fas fa-map-marker-alt"></i> Thamel, Kathmandu</p>
+                        <div class="hostel-features">
+                            <span><i class="fas fa-wifi"></i> WiFi</span>
+                            <span><i class="fas fa-dumbbell"></i> Gym</span>
+                            <span><i class="fas fa-camera"></i> Security</span>
+                        </div>
+                        <div class="hostel-footer">
+                            <div class="current-price">
+                                <span class="price-amount">Rs. 6,000</span>
+                                <span class="price-period">/month</span>
+                            </div>
+                            <a href="#" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hostel-card">
+                    <div class="hostel-image">
+                        <img src="https://images.unsplash.com/photo-1598928506311-c55ez636a8d?w=400&h=300&fit=crop" alt="Hostel">
+                        <button class="favorite-btn"><i class="fas fa-heart"></i></button>
+                    </div>
+                    <div class="hostel-content">
+                        <div class="hostel-rating">
+                            <i class="fas fa-star"></i>
+                            <span>4.9</span>
+                            <span class="reviews">(215 reviews)</span>
+                        </div>
+                        <h3>Patan Youth Hostel</h3>
+                        <p class="hostel-location"><i class="fas fa-map-marker-alt"></i> Patan, Lalitpur</p>
+                        <div class="hostel-features">
+                            <span><i class="fas fa-wifi"></i> WiFi</span>
+                            <span><i class="fas fa-puzzle-piece"></i> Games</span>
+                            <span><i class="fas fa-leaf"></i> Garden</span>
+                        </div>
+                        <div class="hostel-footer">
+                            <div class="current-price">
+                                <span class="price-amount">Rs. 5,500</span>
+                                <span class="price-period">/month</span>
+                            </div>
+                            <a href="#" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hostel-card">
+                    <div class="hostel-image">
+                        <img src="https://images.unsplash.com/photo-1562778612-e1e0cda9915c?w=400&h=300&fit=crop" alt="Hostel">
+                        <span class="hostel-badge">New</span>
+                        <button class="favorite-btn"><i class="fas fa-heart"></i></button>
+                    </div>
+                    <div class="hostel-content">
+                        <div class="hostel-rating">
+                            <i class="fas fa-star"></i>
+                            <span>4.7</span>
+                            <span class="reviews">(67 reviews)</span>
+                        </div>
+                        <h3>Baneshwor Student Stay</h3>
+                        <p class="hostel-location"><i class="fas fa-map-marker-alt"></i> Baneshwor, Kathmandu</p>
+                        <div class="hostel-features">
+                            <span><i class="fas fa-wifi"></i> WiFi</span>
+                            <span><i class="fas fa-car"></i> Parking</span>
+                            <span><i class="fas fa-mug-hot"></i> Kitchen</span>
+                        </div>
+                        <div class="hostel-footer">
+                            <div class="current-price">
+                                <span class="price-amount">Rs. 7,000</span>
+                                <span class="price-period">/month</span>
+                            </div>
+                            <a href="#" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hostel-card">
+                    <div class="hostel-image">
+                        <img src="https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=400&h=300&fit=crop" alt="Hostel">
+                        <button class="favorite-btn"><i class="fas fa-heart"></i></button>
+                    </div>
+                    <div class="hostel-content">
+                        <div class="hostel-rating">
+                            <i class="fas fa-star"></i>
+                            <span>4.5</span>
+                            <span class="reviews">(89 reviews)</span>
+                        </div>
+                        <h3>New Baneshwor PG</h3>
+                        <p class="hostel-location"><i class="fas fa-map-marker-alt"></i> New Baneshwor, Kathmandu</p>
+                        <div class="hostel-features">
+                            <span><i class="fas fa-wifi"></i> WiFi</span>
+                            <span><i class="fas fa-washing-machine"></i> Laundry</span>
+                            <span><i class="fas fa-chair"></i> Common Room</span>
+                        </div>
+                        <div class="hostel-footer">
+                            <div class="current-price">
+                                <span class="price-amount">Rs. 9,000</span>
+                                <span class="price-period">/month</span>
+                            </div>
+                            <a href="#" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hostel-card">
+                    <div class="hostel-image">
+                        <img src="https://images.unsplash.com/photo-1630699144867-37acec97b5f3?w=400&h=300&fit=crop" alt="Hostel">
+                        <span class="hostel-badge">Best Value</span>
+                        <button class="favorite-btn"><i class="fas fa-heart"></i></button>
+                    </div>
+                    <div class="hostel-content">
+                        <div class="hostel-rating">
+                            <i class="fas fa-star"></i>
+                            <span>4.4</span>
+                            <span class="reviews">(156 reviews)</span>
+                        </div>
+                        <h3>Koteshwor Girls Hostel</h3>
+                        <p class="hostel-location"><i class="fas fa-map-marker-alt"></i> Koteshwor, Kathmandu</p>
+                        <div class="hostel-features">
+                            <span><i class="fas fa-wifi"></i> WiFi</span>
+                            <span><i class="fas fa-female"></i> Girls Only</span>
+                            <span><i class="fas fa-utensils"></i> Meals</span>
+                        </div>
+                        <div class="hostel-footer">
+                            <div class="current-price">
+                                <span class="price-amount">Rs. 4,500</span>
+                                <span class="price-period">/month</span>
+                            </div>
+                            <a href="#" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pagination -->
+    <div class="pagination">
+        <a href="#">&laquo; Prev</a>
+        <a href="#" class="active">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+        <a href="#">4</a>
+        <a href="#">5</a>
+        <a href="#">Next &raquo;</a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 HostelNest Nepal. Made with ❤️ for Nepali students.</p>
+                <div class="footer-legal">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

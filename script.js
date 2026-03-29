@@ -12,10 +12,10 @@ document.addEventListener('DOMContentLoaded', function() {
     initSearchTabs();
     initFilterTags();
     initFavoriteButtons();
-    initBudgetCalculator();
     initViewToggle();
     initSearchForm();
     initScrollReveal();
+    initPopup();
 });
 
 /**
@@ -285,8 +285,10 @@ function calculateBudget() {
  * View Toggle Functionality
  */
 function initViewToggle() {
-    const viewBtns = document.querySelectorAll('.view-btn');
-    const listingsGrid = document.querySelector('.listings-grid');
+    const viewBtns = document.querySelectorAll('.view-toggle button');
+    const listingsGrid = document.querySelector('.listings-grid, .hostels-grid');
+    
+    if (!viewBtns.length || !listingsGrid) return;
     
     viewBtns.forEach(btn => {
         btn.addEventListener('click', function() {
@@ -360,8 +362,7 @@ function initScrollReveal() {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const element = entry.target;
-                    element.style.opacity = '1';
-                    element.style.transform = 'translateY(0)';
+                    element.classList.add('revealed');
                     observer.unobserve(element);
                 }
             });
@@ -371,9 +372,6 @@ function initScrollReveal() {
         });
         
         revealElements.forEach(element => {
-            element.style.opacity = '0';
-            element.style.transform = 'translateY(30px)';
-            element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
             observer.observe(element);
         });
     }
@@ -472,7 +470,228 @@ window.HostelNest = {
     initSearchTabs,
     initFilterTags,
     initFavoriteButtons,
-    initBudgetCalculator,
     initViewToggle,
-    initSearchForm
+    initSearchForm,
+    initPopup
 };
+
+/**
+ * Modern Login/Signup Popup
+ */
+function initPopup() {
+    const popupOverlay = document.getElementById('popupOverlay');
+    const loginBtn = document.getElementById('loginBtn');
+    const signupBtn = document.getElementById('signupBtn');
+    const popupClose = document.getElementById('popupClose');
+    const switchBtns = document.querySelectorAll('.auth-switch-btn');
+    const loginForm = document.getElementById('loginForm');
+    const signupForm = document.getElementById('signupForm');
+    const switchToSignup = document.getElementById('switchToSignup');
+    const switchToLogin = document.getElementById('switchToLogin');
+    const loginFooterText = document.getElementById('loginFooterText');
+    const signupFooterText = document.getElementById('signupFooterText');
+    const loginToggle = document.getElementById('loginToggle');
+    const signupToggle = document.getElementById('signupToggle');
+    const loginPassword = document.getElementById('loginPassword');
+    const signupPassword = document.getElementById('signupPassword');
+    const signupConfirm = document.getElementById('signupConfirm');
+
+    if (!popupOverlay) return;
+
+    // Open popup functions
+    function openPopup(tab) {
+        popupOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        if (tab === 'signup') {
+            switchToSignupForm();
+        } else {
+            switchToLoginForm();
+        }
+    }
+
+    function closePopup() {
+        popupOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function switchToLoginForm() {
+        // Update switch buttons
+        switchBtns.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.mode === 'login') {
+                btn.classList.add('active');
+            }
+        });
+        
+        // Update forms
+        loginForm.classList.add('active');
+        signupForm.classList.remove('active');
+        
+        // Update footer text
+        if (loginFooterText) loginFooterText.parentElement.style.display = 'block';
+        if (signupFooterText) signupFooterText.parentElement.style.display = 'none';
+    }
+
+    function switchToSignupForm() {
+        // Update switch buttons
+        switchBtns.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.mode === 'signup') {
+                btn.classList.add('active');
+            }
+        });
+        
+        // Update forms
+        loginForm.classList.remove('active');
+        signupForm.classList.add('active');
+        
+        // Update footer text
+        if (loginFooterText) loginFooterText.parentElement.style.display = 'none';
+        if (signupFooterText) signupFooterText.parentElement.style.display = 'block';
+    }
+
+    // Event listeners - Open popup
+    if (loginBtn) {
+        loginBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            openPopup('login');
+        });
+    }
+
+    if (signupBtn) {
+        signupBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            openPopup('signup');
+        });
+    }
+
+    // Event listener - Close popup
+    if (popupClose) {
+        popupClose.addEventListener('click', closePopup);
+    }
+
+    // Close on overlay click
+    popupOverlay.addEventListener('click', function(e) {
+        if (e.target === popupOverlay) {
+            closePopup();
+        }
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && popupOverlay.classList.contains('active')) {
+            closePopup();
+        }
+    });
+
+    // Switch button clicking
+    switchBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            if (this.dataset.mode === 'login') {
+                switchToLoginForm();
+            } else {
+                switchToSignupForm();
+            }
+        });
+    });
+
+    // Footer links
+    if (switchToSignup) {
+        switchToSignup.addEventListener('click', function(e) {
+            e.preventDefault();
+            switchToSignupForm();
+        });
+    }
+
+    if (switchToLogin) {
+        switchToLogin.addEventListener('click', function(e) {
+            e.preventDefault();
+            switchToLoginForm();
+        });
+    }
+
+    // Password toggle visibility
+    if (loginToggle && loginPassword) {
+        loginToggle.addEventListener('click', function() {
+            const type = loginPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+            loginPassword.setAttribute('type', type);
+            this.classList.toggle('active');
+        });
+    }
+
+    if (signupToggle && signupPassword) {
+        signupToggle.addEventListener('click', function() {
+            const type = signupPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+            signupPassword.setAttribute('type', type);
+            this.classList.toggle('active');
+        });
+    }
+
+    // Form validation - Login
+    const loginFormSubmit = document.getElementById('loginFormSubmit');
+    if (loginFormSubmit) {
+        loginFormSubmit.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            if (!email || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            // Simulate login (replace with actual API call)
+            console.log('Login attempt:', { email, password });
+            alert('Login functionality would connect to your backend!');
+        });
+    }
+
+    // Form validation - Signup
+    const signupFormSubmit = document.getElementById('signupFormSubmit');
+    if (signupFormSubmit) {
+        signupFormSubmit.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const phone = document.getElementById('signupPhone').value;
+            const password = document.getElementById('signupPassword').value;
+            const confirm = document.getElementById('signupConfirm').value;
+            const agreeTerms = document.getElementById('agreeTerms').checked;
+            
+            if (!name || !email || !phone || !password || !confirm) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            if (password !== confirm) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            if (password.length < 6) {
+                alert('Password must be at least 6 characters');
+                return;
+            }
+            
+            if (!agreeTerms) {
+                alert('Please agree to the Terms and Privacy Policy');
+                return;
+            }
+            
+            // Simulate signup (replace with actual API call)
+            console.log('Signup attempt:', { name, email, phone, password });
+            alert('Signup functionality would connect to your backend!');
+        });
+    }
+
+    // Social login buttons
+    const socialBtns = document.querySelectorAll('.auth-social-btn');
+    socialBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const provider = this.classList.contains('google') ? 'Google' : 'Apple';
+            console.log(provider + ' login clicked');
+            alert(provider + ' login would connect to OAuth!');
+        });
+    });
+}
